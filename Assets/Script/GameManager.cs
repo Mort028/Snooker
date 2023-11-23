@@ -13,9 +13,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject ballLine;
 
     [SerializeField] private float xInput;
+    [SerializeField] private float forceBall = 10f;
+    [SerializeField] private GameObject camera;
     void Start()
     {
         instance = this;
+
+        camera = Camera.main.gameObject;
 
         //set ball on table
         SetBalls(BallColors.White, 0);
@@ -32,7 +36,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RotateBall();      
+        RotateBall();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootBall();
+        }
     }
     void SetBalls(BallColors color, int pos)
     {
@@ -46,4 +54,12 @@ public class GameManager : MonoBehaviour
         xInput = Input.GetAxis("Horizontal");
         cueBall.transform.Rotate(new Vector3(0f,xInput,0f));
     }
+
+    void ShootBall()
+    {
+        Rigidbody rigidbody = cueBall.GetComponent<Rigidbody>();
+        rigidbody.AddRelativeForce(Vector3.forward*forceBall,ForceMode.Impulse);
+        ballLine.SetActive(false);
+    }
+    
 }
