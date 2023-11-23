@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField] private int PlayerScore;
     [SerializeField] private GameObject ballPrefab;
-    [SerializeField] GameObject[] ballPositions;   
+    [SerializeField] GameObject[] ballPositions;
+
+    [SerializeField] private GameObject cueBall;
+    [SerializeField] private GameObject ballLine;
+
+    [SerializeField] private float xInput;
     void Start()
     {
         instance = this;
@@ -27,12 +32,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        RotateBall();      
     }
     void SetBalls(BallColors color, int pos)
     {
         GameObject ball = Instantiate(ballPrefab, ballPositions[pos].transform.position, Quaternion.identity);
         Ball scriptBall = ball.GetComponent<Ball>();
         scriptBall.SetColorAndPoint(color);
+    }
+
+    void RotateBall()
+    {
+        xInput = Input.GetAxis("Horizontal");
+        cueBall.transform.Rotate(new Vector3(0f,xInput,0f));
     }
 }
