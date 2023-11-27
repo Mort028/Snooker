@@ -1,26 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    [SerializeField] private int PlayerScore;
+    [Header("Ball")]
+    [SerializeField] private int playerScore;
+    public int PlayerScore { get; set; }
+
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] GameObject[] ballPositions;
 
+    [Header("CueBall")]
     [SerializeField] private GameObject cueBall;
     [SerializeField] private GameObject ballLine;
 
+    [Header("Shoot")]
     [SerializeField] private float xInput;
     [SerializeField] private float forceBall = 10f;
+
     [SerializeField] private GameObject camera;
+
+    [Header("TextUI")]
+    [SerializeField] private TMP_Text scoreText;
     void Start()
     {
         instance = this;
 
         camera = Camera.main.gameObject;
         CameraSet();
+
+        UpdateScoreText();
 
         //set ball on table
         SetBalls(BallColors.White, 0);
@@ -87,5 +99,10 @@ public class GameManager : MonoBehaviour
         CameraSet();
         camera.transform.eulerAngles = new Vector3(40f, 0f, 0f);
         ballLine.SetActive(true);
+    }
+
+    public void UpdateScoreText()
+    {
+        scoreText.text = $"Player Score: {PlayerScore}";
     }
 }
