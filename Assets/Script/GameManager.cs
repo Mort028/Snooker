@@ -53,8 +53,8 @@ public class GameManager : MonoBehaviour
         GameObject ball = Instantiate(ballPrefab, ballPositions[pos].transform.position, Quaternion.identity);
         Ball scriptBall = ball.GetComponent<Ball>();
         scriptBall.SetColorAndPoint(color);
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
-        rigidbody.drag = 1;
+        /*Rigidbody rigidbody = GetComponent<Rigidbody>();
+        rigidbody.drag = 1;*/
     }
 
     void RotateBall()
